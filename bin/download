@@ -22,7 +22,13 @@ function github_releases_download {
 }
 
 function generic_download {
-    wget -q -O application.jar $ARTIFACT_URL
+    echo "-----> Downloading $ARTIFACT_URL"
+	wget -q -O application.jar $ARTIFACT_URL
+	mkdir client
+	cd client
+	echo "-----> Downloading $CLIENT_URL"
+	wget -q -O client.zip $CLIENT_URL
+	unzip client.zip
 }
 
 case $DOWNLOAD_FROM in
@@ -35,7 +41,6 @@ case $DOWNLOAD_FROM in
       snap_download
       ;;
     *)
-      echo "-----> Downloading $ARTIFACT_URL"
       generic_download
       ;;
 esac
