@@ -23,6 +23,7 @@ export_env_dir $ENV_DIR
 
 JVM_COMMON_BUILDPACK=${JVM_COMMON_BUILDPACK:-"https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/jvm-common.tgz"}
 mkdir -p /tmp/jvm-common
+echo -n "-----> Downloading OpenJDK... "
 curl --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-common --strip-components=1
 . /tmp/jvm-common/bin/util
 . /tmp/jvm-common/bin/java
@@ -39,11 +40,6 @@ if [ ! -d $CACHE_DIR ] ; then
 fi
 
 cd $BUILD_DIR
-
-$BIN_DIR/download
-if [[ -z $NO_PRE_DEPLOY ]]; then
-  $BIN_DIR/pre-deploy
-fi
 
 duration=$(( SECONDS - startTime ))
 echo "-----> Finished after $duration seconds"
